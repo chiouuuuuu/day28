@@ -1,24 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
     <title>Document</title>
-    <style>
-        ul{
-            width: 150px;
-        }
-        li{
-            background: yellowgreen;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-    <ul>
-        <li>sssssssssssssssssssssssssssss</li>
-        <li>aaaaa</li>
-        <li>ddddddd</li>
-    </ul>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+    <button id="001">click</button>
+    <script>
+        // 邮箱后缀List参考
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        window.onload = function () {
+            //show();
+            var oin = document.getElementById("email-input");
+            var timer = null;
+            oin.onfocus = function () {
+                oin.onkeyup = function () {
+                    if (oin.value != "") {
+                        show();
+                    }
+                    uodate(oin.value);
+                }
+            }
+
+            oin.onblur = function () {
+                oin.style.background = "#fff";
+                killShow();
+            }
+
+            function uodate(str) {
+                var oul = document.getElementById("email-sug-wrapper");
+                var ali = oul.getElementsByTagName("li");
+                for (var i = 0; i < ali.length; i++) {
+                    ali[i].innerHTML = str + "@" + postfixList[i];
+                    if(ali[i].scrollWidth>ali[i].clientWidth){
+                        alert("长度过长");
+                    }
+                }
+            }
+
+            function show() {
+                killShow();
+                var oul = document.getElementById("email-sug-wrapper");
+                oul.className = "gray-border";
+                for (var i = 0; i < postfixList.length; i++) {
+                    var oli = document.createElement("li");
+                    oli.innerHTML = postfixList[i];
+                    oli.className = "email-tag";
+                    oul.appendChild(oli);
+                }
+            }
+
+            function killShow() {
+                clearInterval(timer);
+                var oul = document.getElementById("email-sug-wrapper");
+                oul.className = "";
+                while (oul.children.length) oul.removeChild(oul.children[0]);
+            }
+        }
+    </script>
 </body>
+
 </html>
