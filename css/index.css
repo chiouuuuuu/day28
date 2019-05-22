@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+    list-style-type: none;
+}
+
+.wrapper{
+    margin-left: 50px;
+}
+
+.email-tag{
+    min-width: 150px;
+    display: block;
+    color:rgb(177, 177, 177);
+    /* border: 1px solid #000; */
+}
+
+.gray-border{
+    /* width: 100px; */
+    border: 1px solid rgb(177, 177, 177);
+}
