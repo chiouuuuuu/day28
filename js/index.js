@@ -2,14 +2,10 @@
  var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
  window.onload = function () {
      createLi();
+     var oul = document.getElementById("email-sug-wrapper");
      var oin = document.getElementById("email-input");
-     oin.onfocus = function () {
-        if (oin.value != "") {
-            update(oin.value);
-        }
-        oin.onkeyup = function () {
-            update(oin.value);
-        }
+     oin.oninput = function () {
+        update(oin.value);
      }
 
      oin.onblur = function () {
@@ -17,15 +13,23 @@
      }
 
      function update(str) {
-         var oul = document.getElementById("email-sug-wrapper");
-         var ali = oul.getElementsByTagName("li");
-         for (var i = 0; i < ali.length; i++) {
-             ali[i].innerHTML = str + "@" + postfixList[i];
-             if(ali[i].scrollWidth>ali[i].clientWidth){
-                 alert("长度过长");
-             }
-         }
-         oul.style.display="block";
+        if (oin.value != "") {
+            var flag=true;
+            var ali = oul.getElementsByTagName("li");
+            for (var i = 0; i < ali.length; i++) {
+                ali[i].innerHTML = str + "@" + postfixList[i];
+                if(ali[i].scrollWidth>ali[i].clientWidth){
+                    oin.value="";
+                    alert("长度过长");
+                    flag=false;
+                }
+            }
+            if(flag)oul.style.display="block";
+            else oul.style.display="none";
+        }
+        else{
+            oul.style.display="none";
+        }
      }
 
      function createLi() {
@@ -40,11 +44,11 @@
          oul.style.display="none";
      }
      document.getElementById("001").onclick=function () {
-        console.log(deleteSpace(oin.value));
+        console.log(trim(oin.value));
      }
  }
 
- function deleteSpace(str){
+ function trim(str){
     let l=0,r=str.length-1;
     while(str[l]==' ')l++;
     while(str[r]==' ')r--;
