@@ -5,31 +5,55 @@
      var oul = document.getElementById("email-sug-wrapper");
      var oin = document.getElementById("email-input");
      oin.oninput = function () {
-        update(oin.value);
+         var str = trim(oin.value);
+         str = preAt(str);
+         update(str);
      }
 
      oin.onblur = function () {
-        document.getElementById("email-sug-wrapper").style.display="none";
+         document.getElementById("email-sug-wrapper").style.display = "none";
      }
 
+    //  function update(str) {
+    //      if (str != "") {
+    //          var flag = true;
+    //          var ali = oul.getElementsByTagName("li");
+    //          for (var i = 0; i < ali.length; i++) {
+    //              ali[i].innerHTML = str + "@" + postfixList[i];
+    //              ali[i].flag=true;
+    //              /****判断用户名长度是否过长****/
+    //              if (ali[i].scrollWidth > ali[i].clientWidth) {
+    //                  oin.value = "";
+    //                  alert("长度过长");
+    //                  flag = false;
+    //              }
+    //          }
+    //          if (flag) oul.style.display = "block";
+    //          else oul.style.display = "none";
+    //      } else {
+    //          oul.style.display = "none";
+    //      }
+    //  }    
+    
      function update(str) {
-        if (oin.value != "") {
-            var flag=true;
-            var ali = oul.getElementsByTagName("li");
-            for (var i = 0; i < ali.length; i++) {
-                ali[i].innerHTML = str + "@" + postfixList[i];
-                if(ali[i].scrollWidth>ali[i].clientWidth){
-                    oin.value="";
-                    alert("长度过长");
-                    flag=false;
-                }
-            }
-            if(flag)oul.style.display="block";
-            else oul.style.display="none";
-        }
-        else{
-            oul.style.display="none";
-        }
+         if (str != "") {
+             var flag = true;
+             var ali = oul.getElementsByTagName("li");
+             for (var i = 0; i < ali.length; i++) {
+                 ali[i].innerHTML = str + "@" + postfixList[i];
+                 ali[i].flag=true;
+                 /****判断用户名长度是否过长****/
+                 if (ali[i].scrollWidth > ali[i].clientWidth) {
+                     oin.value = "";
+                     alert("长度过长");
+                     flag = false;
+                 }
+             }
+             if (flag) oul.style.display = "block";
+             else oul.style.display = "none";
+         } else {
+             oul.style.display = "none";
+         }
      }
 
      function createLi() {
@@ -41,16 +65,53 @@
              oli.className = "email-tag";
              oul.appendChild(oli);
          }
-         oul.style.display="none";
+         oul.style.display = "none";
      }
-     document.getElementById("001").onclick=function () {
-        console.log(trim(oin.value));
+     document.getElementById("001").onclick = function () {
+         console.log(isMatch(oin.value,postfixList[0]));
+     }
+
+     function isMatch(str,arrElement){
+        var l=isHaveAt(str); 
+        var flag=true;
+        if(l!=-1){
+             var ss=str.substring(l+1,str.length);
+             console.log(ss);
+             console.log(arrElement);
+             for(var i=0;i<ss.length;i++){
+                 if(ss[i]!=arrElement[i]){
+                    flag=false;
+                    break;
+                 }
+             }
+         }else{
+             flag=false;
+         }
+         return flag;
      }
  }
 
- function trim(str){
-    let l=0,r=str.length-1;
-    while(str[l]==' ')l++;
-    while(str[r]==' ')r--;
-    return str.substring(l,r+1);
+ function trim(str) {
+     let l = 0,
+         r = str.length - 1;
+     while (str[l] == ' ') l++;
+     while (str[r] == ' ') r--;
+     if (l <= r)
+         return str.substring(l, r + 1);
+     else
+         return "";
+ }
+
+ function isHaveAt(str) {//if string has a '@' return ture
+     var l = 0;
+     var pos=-1;
+     while (str[l] != "@" && l < str.length) l++;
+     if (l != str.length) pos=l;
+     return pos;
+ }
+
+ function preAt(str) {
+     var l=isHaveAt(str);
+     if (l==-1) return str;
+     else return str.substring(0, l);
  }
