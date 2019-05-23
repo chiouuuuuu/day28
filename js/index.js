@@ -9,10 +9,37 @@
          update(str);
      }
 
-     oin.onblur = function () {
-         document.getElementById("email-sug-wrapper").style.display = "none";
+     oul.onmouseover=function(event){
+         var e=event || window.event;
+         var target=e.target || e.srcElement;
+         if(target.nodeName.toLowerCase()=="li"){
+             target.style.background="pink";
+         }
      }
     
+     oul.onmouseout=function(event){
+        var e=event || window.event;
+        var target=e.target || e.srcElement;
+        if(target.nodeName.toLowerCase()=="li"){
+            target.style.background="#fff";
+        }
+    }
+
+    oul.onmousedown=function(event){
+        console.log("ok");
+        var e=event || window.event;
+        var target=e.target || e.srcElement;
+        if(target.nodeName.toLowerCase()=="li"){
+            oin.value=target.innerHTML;
+            console.log(target.innerHTML);
+        }
+        oul.style.display="none";
+    }
+
+    oin.onblur=function(){
+        oul.style.display="none";
+    }
+
      function update(str) {
          if (str != "") {
              var flag = true;//if the flag is true the oul will display
@@ -25,7 +52,6 @@
                  ali[i].innerHTML = preAt(str) + "@" + postfixList[i];
                  ali[i].flag=isMatch(str,postfixList[i]);
                  if(ali[i].flag)numMatched++;
-                 console.log(ali[i].flag);
                  /****判断用户名长度是否过长****/
                  if (ali[i].scrollWidth > ali[i].clientWidth) {
                      oin.value = "";

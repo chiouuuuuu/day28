@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="js/index.js"></script>
     <link rel="stylesheet" href="css/index.css">
     <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -21,37 +19,10 @@
         // 邮箱后缀List参考
         var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
         window.onload = function () {
-            //show();
-            var oin = document.getElementById("email-input");
-            var timer = null;
-            oin.onfocus = function () {
-                oin.onkeyup = function () {
-                    if (oin.value != "") {
-                        show();
-                    }
-                    uodate(oin.value);
-                }
-            }
-
-            oin.onblur = function () {
-                oin.style.background = "#fff";
-                killShow();
-            }
-
-            function uodate(str) {
-                var oul = document.getElementById("email-sug-wrapper");
-                var ali = oul.getElementsByTagName("li");
-                for (var i = 0; i < ali.length; i++) {
-                    ali[i].innerHTML = str + "@" + postfixList[i];
-                    if(ali[i].scrollWidth>ali[i].clientWidth){
-                        alert("长度过长");
-                    }
-                }
-            }
-
-            function show() {
-                killShow();
-                var oul = document.getElementById("email-sug-wrapper");
+            var oul = document.getElementById("email-sug-wrapper");
+            var oin=document.getElementById("email-input");
+            createLi();
+            function createLi() {
                 oul.className = "gray-border";
                 for (var i = 0; i < postfixList.length; i++) {
                     var oli = document.createElement("li");
@@ -59,14 +30,17 @@
                     oli.className = "email-tag";
                     oul.appendChild(oli);
                 }
-            }
-
-            function killShow() {
-                clearInterval(timer);
-                var oul = document.getElementById("email-sug-wrapper");
-                oul.className = "";
-                while (oul.children.length) oul.removeChild(oul.children[0]);
-            }
+                oul.style.display="block";
+            } 
+            oul.onclick=function(event){
+                console.log("ok");
+                var e=event || window.event;
+                var target=e.target || e.srcElement;
+                if(target.nodeName.toLowerCase()=="li"){
+                    oin.value=target.innerHTML;
+                    console.log(target.innerHTML);
+                }
+            }       
         }
     </script>
 </body>
