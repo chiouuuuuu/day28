@@ -1,48 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/index.css">
     <title>Document</title>
 </head>
-
 <body>
-    <div class="wrapper">
-        <input id="email-input" type="text">
-        <ul id="email-sug-wrapper" class="email-sug"></ul>
-    </div>
-    <button id="001">click</button>
+    <table border="1px soild #000" width:"100px">
+        <tr>
+            <td>!</td><td>非</td>
+        </tr>
+        <tr>
+            <td>&amp;&amp;</td><td>与</td>
+        </tr>
+    </table>
     <script>
-        // 邮箱后缀List参考
-        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
-        window.onload = function () {
-            var oul = document.getElementById("email-sug-wrapper");
-            var oin=document.getElementById("email-input");
-            createLi();
-            function createLi() {
-                oul.className = "gray-border";
-                for (var i = 0; i < postfixList.length; i++) {
-                    var oli = document.createElement("li");
-                    oli.innerHTML = postfixList[i];
-                    oli.className = "email-tag";
-                    oul.appendChild(oli);
-                }
-                oul.style.display="block";
-            } 
-            oul.onclick=function(event){
-                console.log("ok");
-                var e=event || window.event;
-                var target=e.target || e.srcElement;
-                if(target.nodeName.toLowerCase()=="li"){
-                    oin.value=target.innerHTML;
-                    console.log(target.innerHTML);
-                }
-            }       
+    var HtmlUtil={
+        htmlEncode:function(html){
+            var temp=document.createElement("div");
+            (temp.textContent!=undefined)?(temp.textContent=html):(temp.innerText=html);
+            var output=temp.innerHTML;
+            temp=null;
+            return output;
+        },
+        htmlDecode:function(text){
+            var temp=document.createElement("div");
+            temp.innerHTML=text;
+            var output=temp.innerText || temp.textContent;
+            temp=null;
+            return output;
         }
+    };        
+        var op=document.getElementsByClassName("temp")[0];
+        console.log(op.innerHTML);
+        console.log(op);
+        var encode=HtmlUtil.htmlEncode(op.innerHTML);
+        console.log(encode);
+        var decode=HtmlUtil.htmlDecode(encode);
+        console.log(decode);
     </script>
 </body>
-
 </html>

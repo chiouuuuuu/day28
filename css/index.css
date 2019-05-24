@@ -28,3 +28,11 @@ li{
     font-size: 10px;
     display: none;
 }
+
+.b-fff{
+    background: #fff;
+}
+
+.b-pink{
+    background: pink;
+}
