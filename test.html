@@ -1,44 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <table border="1px soild #000" width:"100px">
-        <tr>
-            <td>!</td><td>非</td>
-        </tr>
-        <tr>
-            <td>&amp;&amp;</td><td>与</td>
-        </tr>
-    </table>
-    <script>
-    var HtmlUtil={
-        htmlEncode:function(html){
-            var temp=document.createElement("div");
-            (temp.textContent!=undefined)?(temp.textContent=html):(temp.innerText=html);
-            var output=temp.innerHTML;
-            temp=null;
-            return output;
-        },
-        htmlDecode:function(text){
-            var temp=document.createElement("div");
-            temp.innerHTML=text;
-            var output=temp.innerText || temp.textContent;
-            temp=null;
-            return output;
+<html>
+    <head>
+    <title>Mr企鹅先森</title>   
+    </head>
+    <body>
+        <label>
+            <input id="001" type="text" value="2"/>
+            <button id="02">click</button>
+        </body> 
+        <script type="text/javascript">  
+        window.onload=function(){
+            var oin=document.getElementById("001");
+            oin.value="aaaaaaaaaaaa";
+            var btn=document.getElementById("02");
+            oin.onkeydown=function(event){
+                var e=event || window.event;
+                console.log(e.keyCode);
+            }
         }
-    };        
-        var op=document.getElementsByClassName("temp")[0];
-        console.log(op.innerHTML);
-        console.log(op);
-        var encode=HtmlUtil.htmlEncode(op.innerHTML);
-        console.log(encode);
-        var decode=HtmlUtil.htmlDecode(encode);
-        console.log(decode);
-    </script>
-</body>
+        </script>
+    </body>      
 </html>

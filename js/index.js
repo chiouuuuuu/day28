@@ -26,6 +26,8 @@
      var index=0;
      var arr=[];
 
+    oin.focus();
+
      oin.oninput = function () {
          var str = HtmlUnit.Encode(trim(oin.value));
          update(str);
@@ -38,6 +40,9 @@
             // console.log("key 13");
             oin.value=arr[index].innerHTML;
             oul.style.display="none";
+        }
+        else if(e.keyCode==27){
+            oin.select();
         }
         else if(e.keyCode==38 || e.keyCode==40){
             initArrBackground();
@@ -92,6 +97,7 @@
         var target=e.target || e.srcElement;
         if(target.nodeName.toLowerCase()=="li"){
             oin.value=HtmlUnit.Decode(target.innerHTML);
+            oin.focus();
         }
         oul.style.display="none";
     }
@@ -135,7 +141,7 @@
              }
              if(arr.length==0)arr=oul.getElementsByTagName("li");;
              numMatched=arr.length;
-             console.log(arr);
+            //  console.log(arr);
              arr[index].style.background="blue";
             arr[0].lastColor="#fff";
              for(var i=0;i<arr.length;i++){
