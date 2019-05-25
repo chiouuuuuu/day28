@@ -1,5 +1,6 @@
  // 邮箱后缀List参考
  var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+ var numMatched=0;
 
  var HtmlUnit={
     Encode:function(str){
@@ -32,8 +33,7 @@
      }
      oin.onkeydown=function(event){
         var e=event||window.event
-        if(arr.length==0)arr=oul.getElementsByTagName("li");;
-        numMatched=arr.length;
+        
         if(e.keyCode==13){
             // console.log("key 13");
             oin.value=arr[index].innerHTML;
@@ -105,7 +105,7 @@
          arr=[];
          if (str != "") {
              var flag = true;//if the flag is true the oul will display
-             var numMatched=0;
+             numMatched=0;
              var ali = oul.getElementsByTagName("li");
              index=0;
              initArrBackground();
@@ -133,8 +133,11 @@
              for(var i=0;i<ali.length;i++){
                  if(ali[i].flag)arr.push(ali[i]);
              }
+             if(arr.length==0)arr=oul.getElementsByTagName("li");;
+             numMatched=arr.length;
              console.log(arr);
              arr[index].style.background="blue";
+            arr[0].lastColor="#fff";
              for(var i=0;i<arr.length;i++){
                  if(i==index)continue;
                  arr[i].style.background=arr[i].lastColor;
