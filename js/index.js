@@ -31,29 +31,48 @@
          console.log(arr.length);
      }
      oin.onkeydown=function(event){
-        var e=event||window.event;
+        var e=event||window.event
+        if(arr.length==0)arr=oul.getElementsByTagName("li");;
         numMatched=arr.length;
         if(e.keyCode==13){
-            console.log("key 13");
+            // console.log("key 13");
+            oin.value=arr[index].innerHTML;
+            oul.style.display="none";
         }
         else if(e.keyCode==38 || e.keyCode==40){
-                e.preventDefault();
-                if(e.keyCode==38){
-                    index=(index+1)%numMatched;
-                    console.log("key 38");
-                }
-                if(e.keyCode==40){
-                    index=(index-1)%numMatched;
-                    console.log("key 40");
-                }
+            initArrBackground();
+            e.preventDefault();
+            if(e.keyCode==38){
+                index=(index==0)?numMatched-1:index-1;
+                // console.log("key 38");
+            }
+            if(e.keyCode==40){
+                index=(index+1)%numMatched;
+                // console.log("key 40");
+            }
+            console.log(index);
+            arr[index].style.background="blue";
+            for(var i=0;i<arr.length;i++){
+                if(i==index)continue;
+                arr[i].style.background=arr[i].lastColor;
+            }
         }
      }
 
+     function initArrBackground(){
+        for(var i=0;i<arr.length;i++){
+            if(i==index)continue;
+            arr[i].lastColor=arr[i].style.background;
+        }
+    }
+    
+    var lastColor="";
      //the chosen change color
      oul.onmouseover=function(event){
          var e=event || window.event;
          var target=e.target || e.srcElement;
          if(target.nodeName.toLowerCase()=="li"){
+             lastColor=target.style.background;
              target.style.background="pink";
          }
      }
@@ -63,7 +82,7 @@
         var e=event || window.event;
         var target=e.target || e.srcElement;
         if(target.nodeName.toLowerCase()=="li"){
-            target.style.background="#fff";
+            target.style.background=lastColor;
         }
     }
 
@@ -72,7 +91,7 @@
         var e=event || window.event;
         var target=e.target || e.srcElement;
         if(target.nodeName.toLowerCase()=="li"){
-            oin.value=Html.Decode(target.innerHTML);
+            oin.value=HtmlUnit.Decode(target.innerHTML);
         }
         oul.style.display="none";
     }
@@ -88,6 +107,8 @@
              var flag = true;//if the flag is true the oul will display
              var numMatched=0;
              var ali = oul.getElementsByTagName("li");
+             index=0;
+             initArrBackground();
              for(var i=0;i<ali.length;i++){
                 ali[i].style.display="block";
              }
@@ -112,6 +133,12 @@
              for(var i=0;i<ali.length;i++){
                  if(ali[i].flag)arr.push(ali[i]);
              }
+             console.log(arr);
+             arr[index].style.background="blue";
+             for(var i=0;i<arr.length;i++){
+                 if(i==index)continue;
+                 arr[i].style.background=arr[i].lastColor;
+             }
          } else {
              oul.style.display = "none";
          }
@@ -124,6 +151,7 @@
              var oli = document.createElement("li");
              oli.innerHTML = postfixList[i];
              oli.className = "email-tag";
+             oli.style.background="#fff";
              oul.appendChild(oli);
          }
          oul.style.display = "none";
